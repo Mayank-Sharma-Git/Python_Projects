@@ -364,9 +364,25 @@ def subname(ID):
     file.close()
     return subname
 
-def getmarks():
+def getmarks(ID):
 
     file = open("results.bin")
+
+    marks = []
+
+    try:
+        while True:
+            V1 = pickle.load(file)
+            if ID==getmarks:
+                pickle.load(file)
+                pickle.load(file)
+                pickle.load(file)
+                marks.append(pickle.load(file))
+
+    except:
+        pass
+                
+    file.close()
             
     
 
@@ -376,45 +392,54 @@ def getmarks():
 def insertmarks():
 
     file = open('results.bin','ab')
-    file1 = open('subject.bin','rb')
+   
             
     SudID = int(input("Student ID :"))
 
     pickle.dump(SudID,file)
     studentname = sudname(SudID)
+    if not studentname():
+        print("Student Not Found")
+        continue
     pickle.dump(studentname[0],file)
-    
+
+    loop = "Yy"
+    V1 = "Y"
     try:
-        SubID = int(input("Subject ID :"))
-        while True:
-            V2 = SubID
-            pickle.dump(V2,file)
+        
+        while V1 in loop:
+            SubID = int(input("Subject ID :"))
+          
+            pickle.dump(SubID,file)
             
             subjectname = subname(SubID)
+            if not subjectname:
+                print("Subject Not Found")
             
             pickle.dump(subjectname[0],file)
             
-            SubV1 = pickle.load(file1)
-
-            if SubID==SubV1:
-                marks = int(input("Whats the Marks for Subject :"))
+            
+            marks = int(input("Whats the Marks for Subject :"))
                 
-                pickle.dump(marks,file)
+            pickle.dump(marks,file)
+            
+            V1 = input("Want to add Another Subject?(Y/N) :")
 
-                V2 = V2 + 1
+                
+            
     except:
-        pass
+        print error
     
 
     file.close()
-    file1.close()
+   
 
 # Method to View Marks By Student
 
-def insertmarks():
+def marksbystudent():
 
     file = open('results.bin','ab')
-    file1 = open('subject.bin','rb')\
+    file1 = open('subject.bin','rb')
             
     SudID = int(input("Student ID :"))
 
@@ -519,6 +544,8 @@ while True:
         viewsubjects()
     elif Var1==7:
         removesubject()
+    elif Var1==8:
+        insertmarks()
     
 
                                         
