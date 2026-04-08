@@ -16,7 +16,7 @@ def addstudent():
     sname = input("Student's Name: ")
     srn = int(input("Student's Roll No.: "))
     sage = int(input("Student's Age: "))
-    sphone = int(input("Student's Phone numeber: "))
+    sphone = int(input("Student's Phone Number: "))
     pickle.dump(sid,file)
     pickle.dump(sname,file)
     pickle.dump(srn,file)
