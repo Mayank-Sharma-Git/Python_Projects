@@ -1,6 +1,6 @@
 "    STUDENT REPORT HUB    "
 
-# Importing Libraries pickle and os
+# Importing Libraries (pickle and os)
 
 import pickle
 
@@ -258,7 +258,7 @@ def addsubject():
 
     file.close()
 
-# Method To View All Subject
+# Method To View All Subjects
 
 def viewsubjects():
 
@@ -364,27 +364,6 @@ def subname(ID):
     file.close()
     return subname
 
-def getmarks(ID):
-
-    file = open("results.bin")
-
-    marks = []
-
-    try:
-        while True:
-            V1 = pickle.load(file)
-            if ID==getmarks:
-                pickle.load(file)
-                pickle.load(file)
-                pickle.load(file)
-                marks.append(pickle.load(file))
-
-    except:
-        pass
-                
-    file.close()
-            
-    
 
 
 # Method for Inserting Marks For A Student
@@ -392,44 +371,34 @@ def getmarks(ID):
 def insertmarks():
 
     file = open('results.bin','ab')
-   
-            
+
     SudID = int(input("Student ID :"))
 
-    pickle.dump(SudID,file)
     studentname = sudname(SudID)
-    if not studentname():
+    if not studentname:
         print("Student Not Found")
-        continue
+        return
+
+    pickle.dump(SudID,file)
     pickle.dump(studentname[0],file)
 
-    loop = "Yy"
-    V1 = "Y"
-    try:
-        
-        while V1 in loop:
-            SubID = int(input("Subject ID :"))
-          
-            pickle.dump(SubID,file)
-            
-            subjectname = subname(SubID)
-            if not subjectname:
-                print("Subject Not Found")
-            
-            pickle.dump(subjectname[0],file)
-            
-            
-            marks = int(input("Whats the Marks for Subject :"))
-                
-            pickle.dump(marks,file)
-            
-            V1 = input("Want to add Another Subject?(Y/N) :")
+    count = int(input("How many subjects?: "))   
+    pickle.dump(count,file)
 
-                
-            
-    except:
-        print error
-    
+    for i in range(count):
+        SubID = int(input("Subject ID :"))
+        pickle.dump(SubID,file)
+
+        subjectname = subname(SubID)
+
+        if not subjectname:
+            print("Subject Not Exists")
+            return
+        
+        pickle.dump(subjectname[0],file)
+
+        marks = int(input("Marks: "))
+        pickle.dump(marks,file)
 
     file.close()
    
@@ -438,52 +407,89 @@ def insertmarks():
 
 def marksbystudent():
 
-    file = open('results.bin','ab')
-    file1 = open('subject.bin','rb')
+    file = open('results.bin','rb')
             
-    SudID = int(input("Student ID :"))
+    sudid = int(input("Student ID :"))
 
-    studentname = sudname(SudID)
+    studentname = sudname(sudid)
 
-    print("Student Name :",SudId,"          ","Student Name :",studentname[0])
+    print("Student ID :",sudid,"   ","Student Name :",studentname[0])
     
     try:
-        SubID = int(input("Subject ID :"))
         while True:
-            V1 = SubID
-            subjectname = subname(SubID)
-            SubV1 = pickle.load(file1)
+            
+            
+                V1 = pickle.load(file)
+                if V1==sudid:
+                    pickle.load(file)
+                    
+                    print("\nSubject ID :",pickle.load(file))
+                    print("Subject Name :",pickle.load(file))
+                    print("marks :",pickle.load(file))
+                    print("_"*25)
 
-            if SubID==SubV1:
                 
-                print("Subject ID :",SubID)
-                print("Subject Name :",subjectname[0])
-                print("marks :",)
-                print("_"*25)
-
-                V1 = V1 + 1
     except:
+        input("Press ENTER To Continue...")
         pass
     
 
     file.close()
-    file1.close()
-
-
-
-    
-    
 
 
     
+# Method To View Marks By Subject
+
+def marksbysubject():
+
+    file = open('results.bin','rb')
+            
+    subid = int(input("Subject ID :"))
+
+    subjectname = subname(subid)
+
+    if not subjectname:
+        print("Subject Not Exists")
+        return
+
+    print("Subject ID :",subid,"   ","Subject Name :",subjectname[0])
+    
+    try:
+        while True:
+            sid = pickle.load(file)
+            sname = pickle.load(file)
+            
+            
+            while True:
+                
+
+                suid = pickle.load(file)
+                suname = pickle.load(file)
+                marks = pickle.load(file)
+                
+                if suid==subid:
+                
+                    print("\nStudent ID :",sid)
+                    print("Student Name :",sname)
+                    print("Marks :",marks)
+                    print("_"*25)
+
+                
+    except:
+        input("Press ENTER To Continue...")
+        pass
+    
+
+    file.close()
 
 
 
 
 
 
+#Creating Dashboard
 
-
+    
 while True:
     print("""
 
@@ -511,11 +517,7 @@ while True:
             10. View Marks by Subject
 
             ___________________________________________
-            
-            11. Analytics & Reports
-            
-            12. Search Student
-            ___________________________________________
+
             
             0. Exit
 
@@ -523,6 +525,8 @@ while True:
 
 
     """)
+
+# Creating Control Block
 
 
     Var1 = int(input("Enter What you wanna do: "))
@@ -546,6 +550,10 @@ while True:
         removesubject()
     elif Var1==8:
         insertmarks()
+    elif Var1==9:
+        marksbystudent()
+    elif Var1==10:
+        marksbysubject()
     
 
                                         
