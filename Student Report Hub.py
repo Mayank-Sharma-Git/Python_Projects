@@ -178,9 +178,10 @@ def updatestudent():
                     pickle.dump(sphone,file1)
 
     except:
-        input("Press ENTER to Continue...")
+        
         if flag==0:
             print("Student does not Exists")
+        input("Press ENTER to Continue...")
 
     file.close()
     file1.close()
@@ -209,7 +210,7 @@ def deletestudent():
                 pickle.load(file)
                 pickle.load(file)
 
-                print("Student deleted sucessfully")
+                print("Student Deleted Sucessfully")
                 flag = 1
                 break
             else:
